@@ -1,0 +1,12 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients":[
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "result": {
+    "item" : "dwarfcoal:dwarf_coal",
+    "count": 8
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "dwarfcoal",
+  "name": "Dwarf Coal",
+  "description": "This mod add's single use coal forms from coal and charcoal and charcoal blocks",
+  "version": "1.0.0",
+  "side": "universal",
+  "initializer": "sora.dwarfcoal.DwarfCoal",
+  "requires": {
+    "fabric": "*"
+  },
+  "mixins": {
+    "client": "dwarfcoal.client.json",
+    "common": "dwarfcoal.common.json"
+  }
+}
