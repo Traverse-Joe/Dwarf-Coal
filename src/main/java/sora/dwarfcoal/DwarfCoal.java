@@ -8,7 +8,7 @@ import sora.dwarfcoal.init.ModItems;
 public class DwarfCoal implements ModInitializer {
 
     public static final String MODID = "dwarfcoal";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
 
     @Override
     public void onInitialize() {

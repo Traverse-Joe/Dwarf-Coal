@@ -1,7 +1,6 @@
 package sora.dwarfcoal.init;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.block.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import sora.dwarfcoal.DwarfCoal;
