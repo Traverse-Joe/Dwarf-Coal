@@ -1,0 +1,16 @@
+{
+  "type": "crafting_shaped",
+  "pattern": ["d", "s"],
+  "key":{
+    "d":{
+      "item": "dwarfcoal:dwarf_coal"
+    },
+    "s" : {
+      "item": "minecraft:stick"
+    }
+  },
+  "result":{
+    "item": "dwarfcoal:dwarf_torch",
+    "count": 4
+  }
+}

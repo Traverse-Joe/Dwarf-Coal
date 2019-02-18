@@ -15,11 +15,11 @@ import java.util.Map;
 @Mixin(AbstractFurnaceBlockEntity.class)
 public class MixinAbstractFurnaceBlockEntity {
 
-    @Inject(method = "getBurnTimeMap", at = @At("RETURN"), cancellable = true)
-    private static void getBurnTimeMap(CallbackInfoReturnable<Map<Item, Integer>> cir) {
+    @Inject(method = "createFuelTimeMap", at = @At("RETURN"), cancellable = true)
+    private static void createBurnTimeMap(CallbackInfoReturnable<Map<Item, Integer>> cir) {
         addMapping(cir.getReturnValue(), ModItems.DWARF_COAL, 200);
         addMapping(cir.getReturnValue(), ModItems.DWARF_CHARCOAL, 200);
-        addMapping(cir.getReturnValue(), ModBlocks.CHARCOAL_BLOCK, 14400);
+        addMapping(cir.getReturnValue(), ModBlocks.CHARCOAL_BLOCK, 16000);
 
     }
 

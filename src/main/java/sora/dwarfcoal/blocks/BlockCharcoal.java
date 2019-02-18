@@ -1,11 +1,15 @@
 package sora.dwarfcoal.blocks;
 
-import net.fabricmc.fabric.block.FabricBlockSettings;
+import com.google.common.collect.Lists;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.loot.context.LootContext;
+
+import java.util.List;
 
 public class BlockCharcoal extends Block {
     public BlockCharcoal() {
@@ -13,7 +17,8 @@ public class BlockCharcoal extends Block {
     }
 
     @Override
-    public void onBroken(IWorld var1, BlockPos var2, BlockState var3) {
-        super.onBroken(var1, var2, var3);
+    public List<ItemStack> getDroppedStacks(BlockState blockState, LootContext.Builder builder) {
+        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
     }
 }
+
