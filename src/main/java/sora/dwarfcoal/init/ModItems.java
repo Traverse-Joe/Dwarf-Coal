@@ -1,15 +1,15 @@
 package sora.dwarfcoal.init;
 
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.block.BlockItem;
-import net.minecraft.item.block.WallStandingBlockItem;
+import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import sora.dwarfcoal.DwarfCoal;
 import sora.dwarfcoal.items.ItemDwarfCoal;
 
-import static net.minecraft.item.ItemGroup.*;
+import static net.minecraft.item.ItemGroup.BUILDING_BLOCKS;
+import static net.minecraft.item.ItemGroup.DECORATIONS;
 
 public class ModItems {
     public static Item DWARF_COAL = new ItemDwarfCoal();

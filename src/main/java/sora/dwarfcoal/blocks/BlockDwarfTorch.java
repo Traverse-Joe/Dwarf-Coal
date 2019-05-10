@@ -4,12 +4,14 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderLayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -45,14 +47,9 @@ public class BlockDwarfTorch extends Block {
     }
 
     @Override
-    public boolean canPlaceAt(BlockState var1, ViewableWorld var2, BlockPos var3) {
-        BlockPos var4 = var3.down();
-        BlockState var5 = var2.getBlockState(var4);
-        Block var6 = var5.getBlock();
-        boolean var7 = var6.matches(BlockTags.FENCES) || var6 instanceof StainedGlassBlock || var6 == Blocks.GLASS || var6.matches(BlockTags.WALLS) || var5.hasSolidTopSurface(var2, var4);
-        return var7 && var6 != Blocks.END_GATEWAY;
+    public boolean canPlaceAt(BlockState blockState_1, ViewableWorld viewableWorld_1, BlockPos blockPos_1) {
+        return isSolidSmallSquare(viewableWorld_1, blockPos_1.down(), Direction.UP);
     }
-
     @Override
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState var1, World var2, BlockPos var3, Random var4) {

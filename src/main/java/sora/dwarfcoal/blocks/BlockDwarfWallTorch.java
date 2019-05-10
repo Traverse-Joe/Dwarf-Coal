@@ -14,8 +14,8 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Property;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -51,11 +51,11 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
         return (VoxelShape)BOUNDING_SHAPES.get(var1.get(FACING));
     }
 
-    public boolean canPlaceAt(BlockState var1, ViewableWorld var2, BlockPos var3) {
-        Direction var4 = (Direction)var1.get(FACING);
-        BlockPos var5 = var3.offset(var4.getOpposite());
-        BlockState var6 = var2.getBlockState(var5);
-        return Block.isFaceFullSquare(var6.getCollisionShape(var2, var5), var4) && !method_9581(var6.getBlock());
+    public boolean canPlaceAt(BlockState blockState_1, ViewableWorld viewableWorld_1, BlockPos blockPos_1) {
+        Direction direction_1 = (Direction)blockState_1.get(FACING);
+        BlockPos blockPos_2 = blockPos_1.offset(direction_1.getOpposite());
+        BlockState blockState_2 = viewableWorld_1.getBlockState(blockPos_2);
+        return Block.isSolidFullSquare(blockState_2, viewableWorld_1, blockPos_2, direction_1);
     }
 
     public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
@@ -97,12 +97,12 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
         var2.addParticle(ParticleTypes.FLAME, var6 + 0.36D * (double)var16.getOffsetX(), var8 + 0.22D, var10 + 0.36D * (double)var16.getOffsetZ(), 0.0D, 0.0D, 0.0D);
     }
 
-    public BlockState applyRotation(BlockState var1, Rotation var2) {
-        return (BlockState)var1.with(FACING, var2.rotate(var1.get(FACING)));
+    public BlockState rotate(BlockState blockState_1, BlockRotation blockRotation_1) {
+        return (BlockState)blockState_1.with(FACING, blockRotation_1.rotate((Direction)blockState_1.get(FACING)));
     }
 
-    public BlockState applyMirror(BlockState var1, Mirror var2) {
-        return var1.rotate(var2.getRotation((Direction)var1.get(FACING)));
+    public BlockState mirror(BlockState blockState_1, BlockMirror blockMirror_1) {
+        return blockState_1.rotate(blockMirror_1.getRotation((Direction)blockState_1.get(FACING)));
     }
 
     protected void appendProperties(StateFactory.Builder<Block, BlockState> var1) {
@@ -110,7 +110,7 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
     }
 
     static {
-        FACING = HorizontalFacingBlock.field_11177;
+        FACING = HorizontalFacingBlock.FACING;
         BOUNDING_SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(5.5D, 3.0D, 11.0D, 10.5D, 13.0D, 16.0D), Direction.SOUTH, Block.createCuboidShape(5.5D, 3.0D, 0.0D, 10.5D, 13.0D, 5.0D), Direction.WEST, Block.createCuboidShape(11.0D, 3.0D, 5.5D, 16.0D, 13.0D, 10.5D), Direction.EAST, Block.createCuboidShape(0.0D, 3.0D, 5.5D, 5.0D, 13.0D, 10.5D)));
     }
 }
