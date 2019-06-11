@@ -16,5 +16,8 @@ public class ModBlocks {
   public static final Block DWARF_TORCH = new BlockDwarfTorch();
   public static final Block DWARF_WALL_TORCH = new BlockDwarfWallTorch();
 
+  static {
+     new ModBlocks();
+  }
 
 }

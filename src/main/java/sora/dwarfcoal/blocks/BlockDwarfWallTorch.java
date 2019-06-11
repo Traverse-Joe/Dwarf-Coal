@@ -35,12 +35,8 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
 
   public BlockDwarfWallTorch() {
     super();
-    this.setDefaultState((BlockState) ((BlockState) this.stateContainer.getBaseState()).with(HORIZONTAL_FACING, Direction.NORTH));
+    this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
   }
-/*
-  public String getTranslationKey() {
-    return this.asItem().getTranslationKey();
-  }*/
 
   public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
     return func_220289_j(p_220053_1_);
