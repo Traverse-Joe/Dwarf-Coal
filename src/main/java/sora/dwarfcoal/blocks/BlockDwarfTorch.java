@@ -1,67 +1,65 @@
 package sora.dwarfcoal.blocks;
 
 import com.google.common.collect.Lists;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.ViewableWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraft.world.loot.context.LootContext;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.Random;
 
-public class BlockDwarfTorch extends Block {
-    public BlockDwarfTorch() {
-        super(FabricBlockSettings.copy(Blocks.TORCH).lightLevel(10).build());
-    }
+public class BlockDwarfTorch extends BlockBase{
 
-    @Override
-    public List<ItemStack> getDroppedStacks(BlockState blockState, LootContext.Builder builder) {
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
-    }
+  protected static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D);
 
-    public static final VoxelShape BOUNDING_SHAPE = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D);
+  public BlockDwarfTorch() {
+    super("dwarf_torch", Block.Properties.from(Blocks.TORCH).lightValue(10));
+  }
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, VerticalEntityPosition verticalEntityPosition_1) {
-        return BOUNDING_SHAPE;
-    }
+  @Override
+  public List<ItemStack> getDrops(BlockState p_220076_1_, LootContext.Builder p_220076_2_) {
+    return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
+  }
 
-    @Override
-    public BlockState getStateForNeighborUpdate(BlockState var1, Direction var2, BlockState var3, IWorld var4, BlockPos var5, BlockPos var6) {
-        return var2 == Direction.DOWN && !this.canPlaceAt(var1, var4, var5) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(var1, var2, var3, var4, var5, var6);
-    }
+  public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+    return SHAPE;
+  }
 
-    @Override
-    public boolean canPlaceAt(BlockState blockState_1, ViewableWorld viewableWorld_1, BlockPos blockPos_1) {
-        return isSolidSmallSquare(viewableWorld_1, blockPos_1.down(), Direction.UP);
-    }
-    @Override
-    @Environment(EnvType.CLIENT)
-    public void randomDisplayTick(BlockState var1, World var2, BlockPos var3, Random var4) {
-        double var5 = (double)var3.getX() + 0.5D;
-        double var7 = (double)var3.getY() + 0.4D;
-        double var9 = (double)var3.getZ() + 0.5D;
-        var2.addParticle(ParticleTypes.SMOKE, var5, var7, var9, 0.0D, 0.0D, 0.0D);
-        var2.addParticle(ParticleTypes.FLAME, var5, var7, var9, 0.0D, 0.0D, 0.0D);
-    }
-@Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
+  public BlockState updatePostPlacement(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, IWorld p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
+    return p_196271_2_ == Direction.DOWN && !this.isValidPosition(p_196271_1_, p_196271_4_, p_196271_5_) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(p_196271_1_, p_196271_2_, p_196271_3_, p_196271_4_, p_196271_5_, p_196271_6_);
+  }
 
+  public boolean isValidPosition(BlockState p_196260_1_, IWorldReader p_196260_2_, BlockPos p_196260_3_) {
+    return func_220055_a(p_196260_2_, p_196260_3_.down(), Direction.UP);
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
+    double lvt_5_1_ = (double)p_180655_3_.getX() + 0.5D;
+    double lvt_7_1_ = (double)p_180655_3_.getY() + 0.4D;
+    double lvt_9_1_ = (double)p_180655_3_.getZ() + 0.5D;
+    p_180655_2_.addParticle(ParticleTypes.SMOKE, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
+    p_180655_2_.addParticle(ParticleTypes.FLAME, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
+  }
+
+  public BlockRenderLayer getRenderLayer() {
+    return BlockRenderLayer.CUTOUT;
+  }
 }
+
+

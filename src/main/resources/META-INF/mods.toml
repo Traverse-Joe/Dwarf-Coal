@@ -1,0 +1,19 @@
+modLoader="javafml"
+loaderVersion="[26,)"
+credits="Radient_Sora"
+authors="Radient_Sora"
+[[mods]]
+    modId="dwarfcoal"
+    version="0.0.1"
+    displayName="Dwarf Coal" #mandatory
+    description='''
+Dwarf Coal
+This mod add's single use coal forms from coal and charcoal and charcoal blocks and dwarf torches (smaller torches - less light)
+'''
+
+[[dependencies.dwarfcoal]]
+    modId="forge"
+    mandatory=true
+    versionRange="[26,)"
+    ordering="NONE"
+side="BOTH"

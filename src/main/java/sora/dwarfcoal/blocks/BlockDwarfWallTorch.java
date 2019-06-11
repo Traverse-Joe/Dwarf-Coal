@@ -2,115 +2,117 @@ package sora.dwarfcoal.blocks;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.entity.VerticalEntityPosition;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.state.StateFactory;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Property;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.ViewableWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Random;
 
 public class BlockDwarfWallTorch extends BlockDwarfTorch {
-    public static final DirectionProperty FACING;
-    private static final Map<Direction, VoxelShape> BOUNDING_SHAPES;
 
+  public static final DirectionProperty HORIZONTAL_FACING;
+  private static final Map<Direction, VoxelShape> SHAPES;
 
-    public  BlockDwarfWallTorch(){
-        super();
-        this.setDefaultState((BlockState)((BlockState)this.stateFactory.getDefaultState()).with(FACING, Direction.NORTH));
-    }
+  public BlockDwarfWallTorch() {
+    super();
+    this.setDefaultState((BlockState) ((BlockState) this.stateContainer.getBaseState()).with(HORIZONTAL_FACING, Direction.NORTH));
+  }
+/*
+  public String getTranslationKey() {
+    return this.asItem().getTranslationKey();
+  }*/
 
-    public String getTranslationKey() {
-        return this.getItem().getTranslationKey();
-    }
+  public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+    return func_220289_j(p_220053_1_);
+  }
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, VerticalEntityPosition verticalEntityPosition_1) {
-        return
-                getBoundingShape(blockState_1,blockView_1,blockPos_1);
-    }
+  public static VoxelShape func_220289_j(BlockState p_220289_0_) {
+    return (VoxelShape) SHAPES.get(p_220289_0_.get(HORIZONTAL_FACING));
+  }
 
-    public VoxelShape getBoundingShape(BlockState var1, BlockView var2, BlockPos var3) {
-        return (VoxelShape)BOUNDING_SHAPES.get(var1.get(FACING));
-    }
+  public boolean isValidPosition(BlockState p_196260_1_, IWorldReader p_196260_2_, BlockPos p_196260_3_) {
+    Direction lvt_4_1_ = (Direction) p_196260_1_.get(HORIZONTAL_FACING);
+    BlockPos lvt_5_1_ = p_196260_3_.offset(lvt_4_1_.getOpposite());
+    BlockState lvt_6_1_ = p_196260_2_.getBlockState(lvt_5_1_);
+    return Block.func_220056_d(lvt_6_1_, p_196260_2_, lvt_5_1_, lvt_4_1_);
+  }
 
-    public boolean canPlaceAt(BlockState blockState_1, ViewableWorld viewableWorld_1, BlockPos blockPos_1) {
-        Direction direction_1 = (Direction)blockState_1.get(FACING);
-        BlockPos blockPos_2 = blockPos_1.offset(direction_1.getOpposite());
-        BlockState blockState_2 = viewableWorld_1.getBlockState(blockPos_2);
-        return Block.isSolidFullSquare(blockState_2, viewableWorld_1, blockPos_2, direction_1);
-    }
+  @Nullable
+  public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_) {
+    BlockState lvt_2_1_ = this.getDefaultState();
+    IWorldReader lvt_3_1_ = p_196258_1_.getWorld();
+    BlockPos lvt_4_1_ = p_196258_1_.getPos();
+    Direction[] lvt_5_1_ = p_196258_1_.getNearestLookingDirections();
+    Direction[] var6 = lvt_5_1_;
+    int var7 = lvt_5_1_.length;
 
-    public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
-        BlockState blockState_1 = this.getDefaultState();
-        ViewableWorld viewableWorld_1 = itemPlacementContext_1.getWorld();
-        BlockPos blockPos_1 = itemPlacementContext_1.getBlockPos();
-        Direction[] directions_1 = itemPlacementContext_1.getPlacementFacings();
-        Direction[] var6 = directions_1;
-        int var7 = directions_1.length;
-
-        for(int var8 = 0; var8 < var7; ++var8) {
-            Direction direction_1 = var6[var8];
-            if (direction_1.getAxis().isHorizontal()) {
-                Direction direction_2 = direction_1.getOpposite();
-                blockState_1 = (BlockState)blockState_1.with(FACING, direction_2);
-                if (blockState_1.canPlaceAt(viewableWorld_1, blockPos_1)) {
-                    return blockState_1;
-                }
-            }
+    for (int var8 = 0; var8 < var7; ++var8) {
+      Direction lvt_9_1_ = var6[var8];
+      if (lvt_9_1_.getAxis().isHorizontal()) {
+        Direction lvt_10_1_ = lvt_9_1_.getOpposite();
+        lvt_2_1_ = (BlockState) lvt_2_1_.with(HORIZONTAL_FACING, lvt_10_1_);
+        if (lvt_2_1_.isValidPosition(lvt_3_1_, lvt_4_1_)) {
+          return lvt_2_1_;
         }
-
-        return null;
+      }
     }
 
-    public BlockState getStateForNeighborUpdate(BlockState var1, Direction var2, BlockState var3, IWorld var4, BlockPos var5, BlockPos var6) {
-        return var2.getOpposite() == var1.get(FACING) && !var1.canPlaceAt(var4, var5) ? Blocks.AIR.getDefaultState() : var1;
-    }
+    return null;
+  }
 
-    @Environment(EnvType.CLIENT)
-    public void randomDisplayTick(BlockState var1, World var2, BlockPos var3, Random var4) {
-        Direction var5 = (Direction)var1.get(FACING);
-        double var6 = (double)var3.getX() + 0.5D;
-        double var8 = (double)var3.getY() + 0.4D;
-        double var10 = (double)var3.getZ() + 0.5D;
-        double var12 = 0.22D;
-        double var14 = 0.27D;
-        Direction var16 = var5.getOpposite();
-        var2.addParticle(ParticleTypes.SMOKE, var6 + 0.36D * (double)var16.getOffsetX(), var8 + 0.22D, var10 + 0.36D * (double)var16.getOffsetZ(), 0.0D, 0.0D, 0.0D);
-        var2.addParticle(ParticleTypes.FLAME, var6 + 0.36D * (double)var16.getOffsetX(), var8 + 0.22D, var10 + 0.36D * (double)var16.getOffsetZ(), 0.0D, 0.0D, 0.0D);
-    }
+  public BlockState updatePostPlacement(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, IWorld p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
+    return p_196271_2_.getOpposite() == p_196271_1_.get(HORIZONTAL_FACING) && !p_196271_1_.isValidPosition(p_196271_4_, p_196271_5_) ? Blocks.AIR.getDefaultState() : p_196271_1_;
+  }
 
-    public BlockState rotate(BlockState blockState_1, BlockRotation blockRotation_1) {
-        return (BlockState)blockState_1.with(FACING, blockRotation_1.rotate((Direction)blockState_1.get(FACING)));
-    }
+  @OnlyIn(Dist.CLIENT)
+  public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
+    Direction lvt_5_1_ = (Direction) p_180655_1_.get(HORIZONTAL_FACING);
+    double lvt_6_1_ = (double) p_180655_3_.getX() + 0.5D;
+    double lvt_8_1_ = (double) p_180655_3_.getY() + 0.7D;
+    double lvt_10_1_ = (double) p_180655_3_.getZ() + 0.5D;
+    double lvt_12_1_ = 0.22D;
+    double lvt_14_1_ = 0.27D;
+    Direction lvt_16_1_ = lvt_5_1_.getOpposite();
+    p_180655_2_.addParticle(ParticleTypes.SMOKE, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
+    p_180655_2_.addParticle(ParticleTypes.FLAME, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
+  }
 
-    public BlockState mirror(BlockState blockState_1, BlockMirror blockMirror_1) {
-        return blockState_1.rotate(blockMirror_1.getRotation((Direction)blockState_1.get(FACING)));
-    }
+  public BlockState rotate(BlockState p_185499_1_, Rotation p_185499_2_) {
+    return (BlockState) p_185499_1_.with(HORIZONTAL_FACING, p_185499_2_.rotate((Direction) p_185499_1_.get(HORIZONTAL_FACING)));
+  }
 
-    protected void appendProperties(StateFactory.Builder<Block, BlockState> var1) {
-        var1.with(new Property[]{FACING});
-    }
+  public BlockState mirror(BlockState p_185471_1_, Mirror p_185471_2_) {
+    return p_185471_1_.rotate(p_185471_2_.toRotation((Direction) p_185471_1_.get(HORIZONTAL_FACING)));
+  }
 
-    static {
-        FACING = HorizontalFacingBlock.FACING;
-        BOUNDING_SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(5.5D, 3.0D, 11.0D, 10.5D, 13.0D, 16.0D), Direction.SOUTH, Block.createCuboidShape(5.5D, 3.0D, 0.0D, 10.5D, 13.0D, 5.0D), Direction.WEST, Block.createCuboidShape(11.0D, 3.0D, 5.5D, 16.0D, 13.0D, 10.5D), Direction.EAST, Block.createCuboidShape(0.0D, 3.0D, 5.5D, 5.0D, 13.0D, 10.5D)));
-    }
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> p_206840_1_) {
+    p_206840_1_.add(new IProperty[]{HORIZONTAL_FACING});
+  }
+
+  static {
+    HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
+    SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(5.5D, 3.0D, 11.0D, 10.5D, 13.0D, 16.0D), Direction.SOUTH, Block.makeCuboidShape(5.5D, 3.0D, 0.0D, 10.5D, 13.0D, 5.0D), Direction.WEST, Block.makeCuboidShape(11.0D, 3.0D, 5.5D, 16.0D, 13.0D, 10.5D), Direction.EAST, Block.makeCuboidShape(0.0D, 3.0D, 5.5D, 5.0D, 13.0D, 10.5D)));
+  }
 }
+
+

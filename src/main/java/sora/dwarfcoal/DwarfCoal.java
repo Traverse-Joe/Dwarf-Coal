@@ -1,21 +1,25 @@
 package sora.dwarfcoal;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
-import net.minecraft.util.registry.Registry;
-import sora.dwarfcoal.init.ModBlocks;
-import sora.dwarfcoal.init.ModItems;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.common.Mod;
+import sora.dwarfcoal.proxy.ClientProxy;
+import sora.dwarfcoal.proxy.CommonProxy;
+import sora.dwarfcoal.proxy.IProxy;
 
-public class DwarfCoal implements ModInitializer {
+@Mod(DwarfCoal.MODID)
+public class DwarfCoal {
 
-    public static final String MODID = "dwarfcoal";
+  private static DwarfCoal instance;
+  private static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new CommonProxy());
+  public static final String MODID = "dwarfcoal";
+  public static final String MODNAME = "Dwarf Coal";
 
-    @Override
-    public void onInitialize() {
-        ModItems.registerItems(Registry.ITEM);
-        ModBlocks.registerBlocks(Registry.BLOCK);
-        FuelRegistry.INSTANCE.add(ModItems.DWARF_COAL, 200);
-        FuelRegistry.INSTANCE.add(ModItems.DWARF_CHARCOAL, 200);
-        FuelRegistry.INSTANCE.add(ModBlocks.CHARCOAL_BLOCK, 1600);
-    }
+  public static DwarfCoal getInstance(){
+    return instance;
+  }
+
+  public static IProxy getProxy() {
+    return proxy;
+  }
+
 }
