@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["ddd", "d d", "ddd"],
+  "key":{
+    "d":{
+      "item": "dwarfcoal:dwarf_coal"
+    }
+  },
+  "result":{
+    "item": "minecraft:coal"
+  }
+}

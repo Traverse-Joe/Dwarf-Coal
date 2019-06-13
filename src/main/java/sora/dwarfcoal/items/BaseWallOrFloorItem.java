@@ -5,9 +5,10 @@ import net.minecraft.item.WallOrFloorItem;
 import net.minecraft.util.ResourceLocation;
 import sora.dwarfcoal.DwarfCoal;
 
-public class BaseWallorFloorItem extends WallOrFloorItem {
-  public BaseWallorFloorItem(String name,Block p_i48462_1_, Block p_i48462_2_, Properties p_i48462_3_) {
-    super(p_i48462_1_, p_i48462_2_, p_i48462_3_);
+public class BaseWallOrFloorItem extends WallOrFloorItem {
+
+  public BaseWallOrFloorItem(String name,Block block1, Block block2, Properties properties) {
+    super(block1,block2,properties);
     this.setRegistryName(new ResourceLocation(DwarfCoal.MODID, name));
   }
 }

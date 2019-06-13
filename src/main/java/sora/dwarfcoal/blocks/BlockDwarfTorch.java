@@ -1,11 +1,8 @@
 package sora.dwarfcoal.blocks;
 
-import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
@@ -16,25 +13,17 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.List;
 import java.util.Random;
 
-public class BlockDwarfTorch extends BlockBase{
+public class BlockDwarfTorch extends BlockBase {
 
+  public BlockDwarfTorch(String name) {
+    super(name, Properties.from(Blocks.TORCH).lightValue(10));
+  }
   protected static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D);
-
-  public BlockDwarfTorch() {
-    super("dwarf_torch", Block.Properties.from(Blocks.TORCH).lightValue(10));
-  }
-
-  @Override
-  public List<ItemStack> getDrops(BlockState p_220076_1_, LootContext.Builder p_220076_2_) {
-    return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
-  }
 
   public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
     return SHAPE;
@@ -61,5 +50,4 @@ public class BlockDwarfTorch extends BlockBase{
     return BlockRenderLayer.CUTOUT;
   }
 }
-
 

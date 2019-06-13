@@ -22,8 +22,8 @@ public class ModEvents {
   @SubscribeEvent
   public static void registerItems(RegistryEvent.Register<Item> event) {
     event.getRegistry().register(ModItems.DWARF_COAL);
-    event.getRegistry().register(ModItems.DWARF_TORCH);
     event.getRegistry().register(ModItems.DWARF_CHARCOAL);
     event.getRegistry().register(ModItems.CHARCOAL_BLOCK);
+    event.getRegistry().register(ModItems.DWARF_TORCH);
   }
 }

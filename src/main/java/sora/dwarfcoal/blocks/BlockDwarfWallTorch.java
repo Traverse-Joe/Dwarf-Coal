@@ -33,9 +33,9 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
   public static final DirectionProperty HORIZONTAL_FACING;
   private static final Map<Direction, VoxelShape> SHAPES;
 
-  public BlockDwarfWallTorch() {
-    super();
-    this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
+  public BlockDwarfWallTorch(String name) {
+    super(name);
+
   }
 
   public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
@@ -84,7 +84,7 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
   public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
     Direction lvt_5_1_ = (Direction) p_180655_1_.get(HORIZONTAL_FACING);
     double lvt_6_1_ = (double) p_180655_3_.getX() + 0.5D;
-    double lvt_8_1_ = (double) p_180655_3_.getY() + 0.7D;
+    double lvt_8_1_ = (double) p_180655_3_.getY() + 0.4D;
     double lvt_10_1_ = (double) p_180655_3_.getZ() + 0.5D;
     double lvt_12_1_ = 0.22D;
     double lvt_14_1_ = 0.27D;
