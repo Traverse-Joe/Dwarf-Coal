@@ -9,21 +9,24 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import sora.dwarfcoal.init.ConfigDwarfCoal;
 
 import java.util.Random;
 
 public class BlockDwarfTorch extends BlockBase {
-
   public BlockDwarfTorch(String name) {
     super(name, Properties.from(Blocks.TORCH).lightValue(10));
   }
-  protected static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D);
+
+  @Override
+  public int getLightValue(BlockState state, IEnviromentBlockReader world, BlockPos pos) {
+    return Math.min(ConfigDwarfCoal.general.dwarf_torch_light_value.get(), 10);
+  }
+
+  private static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D);
 
   public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
     return SHAPE;
@@ -39,9 +42,9 @@ public class BlockDwarfTorch extends BlockBase {
 
   @OnlyIn(Dist.CLIENT)
   public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
-    double lvt_5_1_ = (double)p_180655_3_.getX() + 0.5D;
-    double lvt_7_1_ = (double)p_180655_3_.getY() + 0.4D;
-    double lvt_9_1_ = (double)p_180655_3_.getZ() + 0.5D;
+    double lvt_5_1_ = (double) p_180655_3_.getX() + 0.5D;
+    double lvt_7_1_ = (double) p_180655_3_.getY() + 0.4D;
+    double lvt_9_1_ = (double) p_180655_3_.getZ() + 0.5D;
     p_180655_2_.addParticle(ParticleTypes.SMOKE, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
     p_180655_2_.addParticle(ParticleTypes.FLAME, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
   }

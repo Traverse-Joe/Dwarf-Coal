@@ -5,8 +5,8 @@ import net.minecraft.util.ResourceLocation;
 import sora.dwarfcoal.DwarfCoal;
 
 public class BlockBase extends Block {
-  public BlockBase(String name, Properties p_i48440_1_) {
-    super(p_i48440_1_);
+  public BlockBase(String name, Properties properties) {
+    super(properties);
     this.setRegistryName(new ResourceLocation(DwarfCoal.MODID,name));
   }
 

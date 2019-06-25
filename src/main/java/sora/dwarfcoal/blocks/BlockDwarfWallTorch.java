@@ -33,6 +33,7 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
   public static final DirectionProperty HORIZONTAL_FACING;
   private static final Map<Direction, VoxelShape> SHAPES;
 
+
   public BlockDwarfWallTorch(String name) {
     super(name);
 
@@ -46,11 +47,11 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
     return (VoxelShape) SHAPES.get(p_220289_0_.get(HORIZONTAL_FACING));
   }
 
-  public boolean isValidPosition(BlockState p_196260_1_, IWorldReader p_196260_2_, BlockPos p_196260_3_) {
-    Direction lvt_4_1_ = (Direction) p_196260_1_.get(HORIZONTAL_FACING);
-    BlockPos lvt_5_1_ = p_196260_3_.offset(lvt_4_1_.getOpposite());
-    BlockState lvt_6_1_ = p_196260_2_.getBlockState(lvt_5_1_);
-    return Block.func_220056_d(lvt_6_1_, p_196260_2_, lvt_5_1_, lvt_4_1_);
+  public boolean isValidPosition(BlockState state, IWorldReader reader, BlockPos blockPos) {
+    Direction lvt_4_1_ = (Direction) state.get(HORIZONTAL_FACING);
+    BlockPos lvt_5_1_ = blockPos.offset(lvt_4_1_.getOpposite());
+    BlockState lvt_6_1_ = reader.getBlockState(lvt_5_1_);
+    return Block.hasSolidSide(lvt_6_1_, reader, lvt_5_1_, lvt_4_1_);
   }
 
   @Nullable
