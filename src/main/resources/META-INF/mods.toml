@@ -4,7 +4,7 @@ credits="Radient_Sora"
 authors="Radient_Sora"
 [[mods]]
     modId="dwarfcoal"
-    version="1.0.0"
+    version="1.14.3-1.1.0"
     displayName="Dwarf Coal" #mandatory
     description='''
 Dwarf Coal

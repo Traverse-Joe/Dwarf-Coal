@@ -12,7 +12,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import sora.dwarfcoal.init.ConfigDwarfCoal;
 
 import java.util.Random;
 
@@ -21,32 +20,27 @@ public class BlockDwarfTorch extends BlockBase {
     super(name, Properties.from(Blocks.TORCH).lightValue(10));
   }
 
-  @Override
-  public int getLightValue(BlockState state, IEnviromentBlockReader world, BlockPos pos) {
-    return Math.min(ConfigDwarfCoal.general.dwarf_torch_light_value.get(), 10);
-  }
-
   private static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 5.0D, 10.0D);
 
-  public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+  public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext context) {
     return SHAPE;
   }
 
-  public BlockState updatePostPlacement(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, IWorld p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
-    return p_196271_2_ == Direction.DOWN && !this.isValidPosition(p_196271_1_, p_196271_4_, p_196271_5_) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(p_196271_1_, p_196271_2_, p_196271_3_, p_196271_4_, p_196271_5_, p_196271_6_);
+  public BlockState updatePostPlacement(BlockState blockState1, Direction direction, BlockState blockstate2, IWorld world, BlockPos pos1, BlockPos pos2) {
+    return direction == Direction.DOWN && !this.isValidPosition(blockState1, world, pos1) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(blockState1, direction, blockstate2, world, pos1, pos2);
   }
 
-  public boolean isValidPosition(BlockState p_196260_1_, IWorldReader p_196260_2_, BlockPos p_196260_3_) {
-    return func_220055_a(p_196260_2_, p_196260_3_.down(), Direction.UP);
+  public boolean isValidPosition(BlockState state, IWorldReader reader, BlockPos pos) {
+    return func_220055_a(reader, pos.down(), Direction.UP);
   }
 
   @OnlyIn(Dist.CLIENT)
-  public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
-    double lvt_5_1_ = (double) p_180655_3_.getX() + 0.5D;
-    double lvt_7_1_ = (double) p_180655_3_.getY() + 0.4D;
-    double lvt_9_1_ = (double) p_180655_3_.getZ() + 0.5D;
-    p_180655_2_.addParticle(ParticleTypes.SMOKE, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
-    p_180655_2_.addParticle(ParticleTypes.FLAME, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
+  public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
+    double lvt_5_1_ = (double) pos.getX() + 0.5D;
+    double lvt_7_1_ = (double) pos.getY() + 0.4D;
+    double lvt_9_1_ = (double) pos.getZ() + 0.5D;
+    world.addParticle(ParticleTypes.SMOKE, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
+    world.addParticle(ParticleTypes.FLAME, lvt_5_1_, lvt_7_1_, lvt_9_1_, 0.0D, 0.0D, 0.0D);
   }
 
   public BlockRenderLayer getRenderLayer() {

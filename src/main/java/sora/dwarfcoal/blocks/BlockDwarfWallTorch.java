@@ -39,12 +39,12 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
 
   }
 
-  public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
-    return func_220289_j(p_220053_1_);
+  public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+    return func_220289_j(state);
   }
 
-  public static VoxelShape func_220289_j(BlockState p_220289_0_) {
-    return (VoxelShape) SHAPES.get(p_220289_0_.get(HORIZONTAL_FACING));
+  public static VoxelShape func_220289_j(BlockState state) {
+    return (VoxelShape) SHAPES.get(state.get(HORIZONTAL_FACING));
   }
 
   public boolean isValidPosition(BlockState state, IWorldReader reader, BlockPos blockPos) {
@@ -55,11 +55,11 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
   }
 
   @Nullable
-  public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_) {
+  public BlockState getStateForPlacement(BlockItemUseContext context) {
     BlockState lvt_2_1_ = this.getDefaultState();
-    IWorldReader lvt_3_1_ = p_196258_1_.getWorld();
-    BlockPos lvt_4_1_ = p_196258_1_.getPos();
-    Direction[] lvt_5_1_ = p_196258_1_.getNearestLookingDirections();
+    IWorldReader lvt_3_1_ = context.getWorld();
+    BlockPos lvt_4_1_ = context.getPos();
+    Direction[] lvt_5_1_ = context.getNearestLookingDirections();
     Direction[] var6 = lvt_5_1_;
     int var7 = lvt_5_1_.length;
 
@@ -77,29 +77,29 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
     return null;
   }
 
-  public BlockState updatePostPlacement(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, IWorld p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
-    return p_196271_2_.getOpposite() == p_196271_1_.get(HORIZONTAL_FACING) && !p_196271_1_.isValidPosition(p_196271_4_, p_196271_5_) ? Blocks.AIR.getDefaultState() : p_196271_1_;
+  public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState state1, IWorld world, BlockPos pos1, BlockPos pos2) {
+    return direction.getOpposite() == state.get(HORIZONTAL_FACING) && !state.isValidPosition(world, pos1) ? Blocks.AIR.getDefaultState() : state;
   }
 
   @OnlyIn(Dist.CLIENT)
-  public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
-    Direction lvt_5_1_ = (Direction) p_180655_1_.get(HORIZONTAL_FACING);
-    double lvt_6_1_ = (double) p_180655_3_.getX() + 0.5D;
-    double lvt_8_1_ = (double) p_180655_3_.getY() + 0.4D;
-    double lvt_10_1_ = (double) p_180655_3_.getZ() + 0.5D;
+  public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
+    Direction lvt_5_1_ = (Direction) state.get(HORIZONTAL_FACING);
+    double lvt_6_1_ = (double) pos.getX() + 0.5D;
+    double lvt_8_1_ = (double) pos.getY() + 0.4D;
+    double lvt_10_1_ = (double) pos.getZ() + 0.5D;
     double lvt_12_1_ = 0.22D;
     double lvt_14_1_ = 0.27D;
     Direction lvt_16_1_ = lvt_5_1_.getOpposite();
-    p_180655_2_.addParticle(ParticleTypes.SMOKE, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
-    p_180655_2_.addParticle(ParticleTypes.FLAME, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
+    world.addParticle(ParticleTypes.SMOKE, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
+    world.addParticle(ParticleTypes.FLAME, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
   }
 
-  public BlockState rotate(BlockState p_185499_1_, Rotation p_185499_2_) {
-    return (BlockState) p_185499_1_.with(HORIZONTAL_FACING, p_185499_2_.rotate((Direction) p_185499_1_.get(HORIZONTAL_FACING)));
+  public BlockState rotate(BlockState state, Rotation rotation) {
+    return (BlockState) state.with(HORIZONTAL_FACING, rotation.rotate((Direction) state.get(HORIZONTAL_FACING)));
   }
 
-  public BlockState mirror(BlockState p_185471_1_, Mirror p_185471_2_) {
-    return p_185471_1_.rotate(p_185471_2_.toRotation((Direction) p_185471_1_.get(HORIZONTAL_FACING)));
+  public BlockState mirror(BlockState state, Mirror mirror ) {
+    return state.rotate(mirror.toRotation((Direction) state.get(HORIZONTAL_FACING)));
   }
 
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> p_206840_1_) {
