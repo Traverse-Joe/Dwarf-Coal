@@ -4,10 +4,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import sora.dwarfcoal.DwarfCoal;
+import sora.dwarfcoal.init.ConfigHandler;
 import sora.dwarfcoal.init.ModItemGroup;
 import sora.dwarfcoal.init.ModItems;
 
 public class ItemBase extends Item {
+
+  public int burnTime = ConfigHandler.general.burnTime.get();
 
   //private static final Properties PROPS = new Properties().group(ModItemGroup.getInstance()).maxStackSize(64);
 
@@ -22,7 +25,7 @@ public class ItemBase extends Item {
     if(itemStack.isEmpty()) return 0;
     Item item = itemStack.getItem();
     if(item == ModItems.DWARF_CHARCOAL || item == ModItems.DWARF_COAL){
-      return 200;
+      return burnTime;
     }
     return 0;
   }

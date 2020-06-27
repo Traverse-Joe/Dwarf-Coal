@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["s", "s"],
+  "key":{
+    "s":{
+      "tag": "forge:cobblestone"
+    }
+  },
+  "result":{
+    "item": "dwarfcoal:stone_rod",
+    "count": 2
+  }
+}

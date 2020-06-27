@@ -9,4 +9,5 @@ public class BlockBase extends Block {
     super(properties);
     this.setRegistryName(new ResourceLocation(DwarfCoal.MODID,name));
   }
+
 }

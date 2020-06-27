@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_torch",
+  "textures": {
+    "torch": "dwarfcoal:blocks/stone_torch"
+  }
+}

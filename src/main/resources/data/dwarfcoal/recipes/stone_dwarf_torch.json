@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["d", "s"],
+  "key":{
+    "d":{
+      "tag": "forge:nuggets/coal"
+    },
+    "s" : {
+      "tag": "forge:rods/stone"
+    }
+  },
+  "result":{
+    "item": "dwarfcoal:stone_dwarf_torch",
+    "count": 4
+  }
+}

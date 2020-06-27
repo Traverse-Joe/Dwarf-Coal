@@ -28,13 +28,13 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Random;
 
-public class BlockDwarfWallTorch extends BlockDwarfTorch {
+public class BlockWallTorchBase extends BlockTorchBase {
 
   public static final DirectionProperty HORIZONTAL_FACING;
   private static final Map<Direction, VoxelShape> SHAPES;
 
 
-  public BlockDwarfWallTorch(String name) {
+  public BlockWallTorchBase(String name) {
     super(name);
 
   }
@@ -85,13 +85,13 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
   public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
     Direction lvt_5_1_ = (Direction) state.get(HORIZONTAL_FACING);
     double lvt_6_1_ = (double) pos.getX() + 0.5D;
-    double lvt_8_1_ = (double) pos.getY() + 0.4D;
+    double lvt_8_1_ = (double) pos.getY() + 0.7D;
     double lvt_10_1_ = (double) pos.getZ() + 0.5D;
     double lvt_12_1_ = 0.22D;
     double lvt_14_1_ = 0.27D;
     Direction lvt_16_1_ = lvt_5_1_.getOpposite();
-    world.addParticle(ParticleTypes.SMOKE, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
-    world.addParticle(ParticleTypes.FLAME, lvt_6_1_ + 0.36D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.36D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
+    world.addParticle(ParticleTypes.SMOKE, lvt_6_1_ + 0.27D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.27D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
+    world.addParticle(ParticleTypes.FLAME, lvt_6_1_ + 0.27D * (double) lvt_16_1_.getXOffset(), lvt_8_1_ + 0.22D, lvt_10_1_ + 0.27D * (double) lvt_16_1_.getZOffset(), 0.0D, 0.0D, 0.0D);
   }
 
   public BlockState rotate(BlockState state, Rotation rotation) {
@@ -111,5 +111,3 @@ public class BlockDwarfWallTorch extends BlockDwarfTorch {
     SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(5.5D, 3.0D, 11.0D, 10.5D, 13.0D, 16.0D), Direction.SOUTH, Block.makeCuboidShape(5.5D, 3.0D, 0.0D, 10.5D, 13.0D, 5.0D), Direction.WEST, Block.makeCuboidShape(11.0D, 3.0D, 5.5D, 16.0D, 13.0D, 10.5D), Direction.EAST, Block.makeCuboidShape(0.0D, 3.0D, 5.5D, 5.0D, 13.0D, 10.5D)));
   }
 }
-
-
