@@ -23,22 +23,14 @@ public class DwarfCoal {
   public DwarfCoal instance;
   private static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new CommonProxy());
   public static final String MODID = "dwarfcoal";
-  public static final Logger LOGGER = LogManager.getLogger();
-  public static File CONFIG_DIR = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
+
 
   public DwarfCoal(){
-    FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-    ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.configSpec);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigHandler.configSpec);
     MinecraftForge.EVENT_BUS.register(this);
   }
   public DwarfCoal getInstance() {
     return instance;
-  }
-
-  private void setup(final FMLCommonSetupEvent event){
-    if (!CONFIG_DIR.exists() && !CONFIG_DIR.mkdir()) {
-      LOGGER.warn("Impossible to create the config folder");
-    }
   }
 
   public static IProxy getProxy() {

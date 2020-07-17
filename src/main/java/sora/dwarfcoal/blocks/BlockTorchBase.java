@@ -21,7 +21,7 @@ public class BlockTorchBase extends BlockBase {
 
   public BlockTorchBase(String name) {
     super(name, Properties.from(Blocks.TORCH).func_235838_a_((state) -> {
-      return 10;
+      return 14;
     }));
   }
   private static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 10.0D, 10.0D);
