@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=east": { "model": "dwarfcoal:block/dwarf_wall_torch" },
-    "facing=south": { "model": "dwarfcoal:block/dwarf_wall_torch", "y": 90 },
-    "facing=west": { "model": "dwarfcoal:block/dwarf_wall_torch", "y": 180 },
-    "facing=north": { "model": "dwarfcoal:block/dwarf_wall_torch", "y": 270 }
-  }
-}
