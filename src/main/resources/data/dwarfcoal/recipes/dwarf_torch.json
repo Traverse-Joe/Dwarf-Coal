@@ -3,7 +3,7 @@
   "pattern": ["d", "s"],
   "key":{
     "d":{
-      "item": "dwarfcoal:dwarf_coal"
+      "tag": "c:coal_nuggets"
     },
     "s" : {
       "item": "minecraft:stick"

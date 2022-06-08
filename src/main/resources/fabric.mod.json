@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "id": "dwarfcoal",
   "name": "Dwarf Coal",
-  "description": "This mod add's single use coal forms from coal and charcoal and charcoal blocks and dwarf torches (smaller torches - less light)\"",
+  "description": "This mod adds single use coal forms from coal and charcoal and charcoal blocks and dwarf torches (smaller torches - less light)\"",
   "license": "MIT",
   "authors": [
     {
-      "name": "Radient_Sora",
+      "name": "Traverse_Joe",
       "contact": {
-        "homepage": "https://twitter.com/Radient_Sora"
+        "homepage": "https://twitter.com/Traverse_Joe"
       }
     }
   ],
@@ -20,7 +20,13 @@
   },
   "entrypoints": {
     "main": [
-      "sora.dwarfcoal.DwarfCoal"
+      "com.traverse.dwarfcoal.DwarfCoal"
+    ],
+    "client": [
+      "com.traverse.dwarfcoal.client.DwarfCoalClient"
+    ],
+    "modmenu": [
+      "com.traverse.dwarfcoal.config.ModMenuIntegration"
     ]
   }
 }
